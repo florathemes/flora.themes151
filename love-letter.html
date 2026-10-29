@@ -75,11 +75,16 @@ body{margin:0;background:var(--bg);color:var(--tx);font-family:Cairo,system-ui,s
 @media(prefers-reduced-motion:reduce){.bf{display:none}}
 .bsp{position:absolute;font-size:15px;animation:bsp .7s ease-out forwards}@keyframes bsp{to{transform:translate(var(--x),var(--y)) scale(.3) rotate(120deg);opacity:0}}
 .lk{margin-top:14px;padding:12px;border:2px solid var(--gd);border-radius:12px;background:var(--card)}.lk input{margin:8px 0}.rmp{font-weight:400;font-size:14px;display:block}.fb input[type=checkbox]{width:auto;margin:0 6px}
+.xtoast{position:fixed;bottom:90px;left:50%;transform:translateX(-50%);max-width:88vw;text-align:center;background:#2a1230;color:#fff;border-radius:20px;padding:9px 18px;font:600 13px Cairo;z-index:60;box-shadow:0 6px 18px #0007;animation:fi .3s}
 </style></head><body>
 <main id="ed"></main>
 <div id="th" hidden><div class="st" id="st"></div><button class="x" id="bk">✕</button></div>
 <script>
 const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)],esc=s=>String(s??"").replace(/[&<>"]/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[m]));
+function XT(m){const o=document.createElement("div");o.className="xtoast";o.textContent=m;document.body.appendChild(o);setTimeout(()=>o.remove(),3600)}
+const XE=e=>XT((document.documentElement.lang=="en"?e&&e.name=="NotAllowedError"?"Tap the music button 🎵 to start the song":"Audio can’t play in this browser 🔇 ("+(e&&e.name)+")":e&&e.name=="NotAllowedError"?"اضغط على زرار الموسيقى 🎵 عشان الأغنية تشتغل":"الصوت مش شغال على المتصفح ده 🔇 ("+(e&&e.name)+")"));
+function FB(a,src){a.addEventListener("error",()=>{if(a._f||!src.startsWith("data:"))return;a._f=1;try{const b=atob(src.split(",")[1]),u=new Uint8Array(b.length);for(let i=0;i<b.length;i++)u[i]=b.charCodeAt(i);const was=!a.paused;a.src=URL.createObjectURL(new Blob([u],{type:src.slice(5,src.indexOf(";"))}));if(was)a.play().catch(()=>{})}catch(e){}});return a}
+
 const SB="https://isynejnhyllegpwdekga.supabase.co",KEY="sb_publishable_JfxTTjw7dH_nvEuDhuHYeQ_FdchFpHg";
 const QP=new URLSearchParams(location.search),OID=QP.get("id"),TOK=QP.get("edit");
 async function sbf(path,opt){let r=await fetch(SB+path,{...opt,headers:{apikey:KEY,...(opt.headers||{})}});if(r.status==401||r.status==403)r=await fetch(SB+path,{...opt,headers:{apikey:KEY,Authorization:"Bearer "+KEY,...(opt.headers||{})}});return r}
@@ -146,7 +151,7 @@ v.toLowerCase()==c.pass.trim().toLowerCase()?(ready(),BLOOM("lv")):shake($("#sw"
 if(ok){ready();$("#sw").style.display="none"}
 $("#go").onclick=un;$("#pi").onkeydown=e=>{if(e.key=="Enter")un()};
 $("#sl").onclick=()=>{if(!ok)return shake($("#sw"));$("#sl").onclick=null;BLOOM("lv",18);$("#ev").classList.add("op");play(true);setTimeout(()=>{$(".scr").classList.add("out")},1900);setTimeout(letter,2400)}}
-function play(v){if(cur.au){v?cur.au.play().catch(()=>{}):cur.au.pause();cur.on=v;const b=$("#mb");b&&b.classList.toggle("on",v)}}
+function play(v){if(cur.au){v?cur.au.play().catch(XE):cur.au.pause();cur.on=v;const b=$("#mb");b&&b.classList.toggle("on",v)}}
 function mbtn(){return`<div class="mbt ${cur.on?"on":""}" id="mb"><i class="bars"><u></u><u></u><u></u></i></div>`}
 function mbind(){const b=$("#mb");if(!cur.au)return b.remove();b.onclick=()=>play(!cur.on)}
 function tw(el,s,cb){let i=0;clearInterval(tm);tm=setInterval(()=>{el.textContent=s.slice(0,++i);if(i>=s.length){clearInterval(tm);cb&&cb()}},32)}
